@@ -1,0 +1,39 @@
+<!doctype html>
+<!-- I have built this from a number of different sources -->
+<!--Source: dirn. Passing value from a drop down menu to a Flask template [Online]. [Accessed 01 May 2020]. Available at:https://stackoverflow.com/questions/23557063/passing-value-from-a-drop-down-menu-to-a-flask-template -->
+<!--Source: Shivendra Pratap Kushwaha. Show select field based on some other select option in Flask [Online]. [Accessed 01 May 2020]. Available at:https://stackoverflow.com/questions/58841634/show-select-field-based-on-some-other-select-option-in-flask -->
+<!--Source: MrLeeh. Flask Dynamic dependent dropdown list [Online]. [Accessed 01 May 2020]. Available at:https://stackoverflow.com/questions/44646925/flask-dynamic-dependent-dropdown-list -->
+
+<!--  the below looks to create a dependent field for event depending on what the sport field value is -->
+<label>Choose a Sport and then Event </label>
+<form action="" method="post" role="form">
+  <select name="sport" id="sport">
+    <option value="choose" selected disabled>Choose a Sport</option>
+  </select>
+  <select name="sport_event" id="sport_event">
+    <option value="choose" selected disabled>Choose an Event</option>
+  </select>
+  <button type="submit">Play</button>
+</form>
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script>
+  "use strict";
+  var sports_events = {{ sports_events | tojson } };
+  var form = $('form');
+  var sport = $('select#sport');
+  var sport_event = $('select#sport_event');
+
+  for (var key in sports_events) { sport.append($('<option/>', {
+      'value': key,
+      'text': key })); }
+
+  sport.change(function(ev) {
+    sport_event.empty();
+    sport_event.append($('<option/>'));
+    var events = sports_events[sport.val()];
+    for (var i in events) {
+      sport_event.append($('<option/>', {
+        'value': events[i],
+        'text': events[i]}));}
+  });
+</script>

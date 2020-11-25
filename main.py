@@ -14,9 +14,9 @@ from stacked_bar_chart_medals import fig as fig_stacked_bar_chart_medals
 from total_events_over_time import fig as fig_events_over_time
 from clean_winter_olympic_medals_data import sports_and_events, messages #for the dropdown boxes sports and events
 from gender_distribution_map import fig as fig_map_gender_distribution
-from old_sports_new_nations import fig as fig_new_sports_new_nations
-from continent_representation_over_time import fig as fig_continent_graph
-from working_example_1_animation_gender_graph import fig as fig_working_graph_example_one
+# from old_sports_new_nations import fig as fig_new_sports_new_nations
+# from continent_representation_over_time import fig as fig_continent_graph
+# from working_example_1_animation_gender_graph import fig as fig_working_graph_example_one
 
 #Flask settings.
 debug_mode = False #remember in debug mode, it initalises twice
@@ -106,13 +106,13 @@ def create():
         message = find_message(messages, sport)
 
         #Ensure the graphs are ready for the Flask interface
-    continent_graph = json.dumps(fig_continent_graph, cls=plotly.utils.PlotlyJSONEncoder)
+    # continent_graph = json.dumps(fig_continent_graph, cls=plotly.utils.PlotlyJSONEncoder)
     gender_distribution_graph = json.dumps(fig_gender_distribution, cls=plotly.utils.PlotlyJSONEncoder)
     stacked_bar_chart_medals = json.dumps(fig_stacked_bar_chart_medals, cls=plotly.utils.PlotlyJSONEncoder)
     events_over_time_graph = json.dumps(fig_events_over_time, cls=plotly.utils.PlotlyJSONEncoder)
     map_gender_distribution = json.dumps(fig_map_gender_distribution, cls=plotly.utils.PlotlyJSONEncoder)
-    new_sports_new_nations_chart = json.dumps(fig_new_sports_new_nations, cls=plotly.utils.PlotlyJSONEncoder)
-    working_graph_example_one = json.dumps(fig_working_graph_example_one, cls=plotly.utils.PlotlyJSONEncoder)
+    # new_sports_new_nations_chart = json.dumps(fig_new_sports_new_nations, cls=plotly.utils.PlotlyJSONEncoder)
+    # working_graph_example_one = json.dumps(fig_working_graph_example_one, cls=plotly.utils.PlotlyJSONEncoder)
 
     #Render the template for Flask using index.html
     return render_template('index.html',
@@ -121,13 +121,13 @@ def create():
                         weight_graph=weight_graph,
                         message = message,
                         sports = sports,
-                        continent_graph = continent_graph,
+                        # continent_graph = continent_graph,
                         gender_distribution_graph=gender_distribution_graph,
                         medals_per_country_graph=stacked_bar_chart_medals,
                         events_over_time_graph=events_over_time_graph,
                         map_gender_distribution = map_gender_distribution,
-                        new_sports_new_nations_chart = new_sports_new_nations_chart,
-                        working_graph_example_one = working_graph_example_one,
+                        # new_sports_new_nations_chart = new_sports_new_nations_chart,
+                        # working_graph_example_one = working_graph_example_one,
                         )
 
 #Run

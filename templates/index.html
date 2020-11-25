@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>Winter Olympic Data Anlaysis Using Python</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <!--Source: Plotly. Getting Started in JavaScript [Online]. [Accessed 20 May 2020]. Available at:https://plotly.com/javascript/getting-started/ -->
+    <!--Source: Bootstrap. Getting started [Online]. [Accessed 01 May 2020]. Available at:https://getbootstrap.com/docs/3.3/getting-started/ -->
+    <style>
+      .section {margin: 2% 5% 0% 5%;}
+      #curious_label {margin: 3% 0% 5% 0%; text-align:center;}
+      h3 {text-align: center;}
+      .chart {text-align: center;}
+      h5 {margin: 2%, 1%, 0, 5%;}
+      img {width: 50%;}
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Winter Olympic Analysis</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link disabled href=">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#medals_per_country_section">Medal Counts</a> <!-- Some of these tabs are apart of a wider application I am looking to build after this project -->
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#height_weight_section">Heights and Weights Over Time</a>
+          </li>
+          <!-- <li class="nav-item active">
+            <a class="nav-link" href="#continent_section">Continent Change Over Time</a>
+          </li> -->
+          <li class="nav-item active">
+            <a class="nav-link" href="#map_gender_distribution_section">Gender Distribution Map</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#gender_dist_section">Gender Distribution Per Sport</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#events_over_time_section"> Sports Over Time</a>
+          </li>
+          <!-- <li class="nav-item active">
+            <a class="nav-link" href="#new_sports_new_nations_section">Traditional Sports & New Nations</a>
+          </li> -->
+        </ul>
+      </div>
+    </nav>
+  <div>
+    <div>
+      <br />
+      <div class="section" id="medals_per_country_section">
+        <h3>To start, the Traditional Graph but with a little twist</h3>
+        <h5> Who did you think came top? What do you think their specialist sport is? </h5>
+        <div class="chart" id="medals_per_country_graph">
+          <script>
+              var graphs = {{medals_per_country_graph | safe}};
+              Plotly.plot('medals_per_country_graph',graphs,{});
+          </script>
+      </div>
+    </div>
+      <h2></h2>
+      <div class="section" id="height_weight_section">
+        <div class="inside_section" id="form_section">
+          <h3>So you'd think Heights would increase and Weights decrease over time?</h3>
+            <br />
+            <form action="" method="post" role="form">
+              <label> Choose a Sport:</label>
+              <select name="sport" class="form-control" id ='sport'>
+              </select>
+              <br />
+              <label> Choose a Event:</label>
+              <select name="sport_event" class="form-control" id ='sport_event'>
+                  <option value="choose" selected disabled>Choose an Event</option>
+              </select>
+              <br />
+              <button type="submit" class="btn btn-success">Plot!</button>
+              <p> Please wait for refresh</p>
+            </form>
+            <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+            <script>
+                "use strict";
+                var sports_events = {{ sports_events|tojson }};
+                var form = $('form');
+                var sport = $('select#sport');
+                var sport_event = $('select#sport_event');
+
+                for (var key in sports_events) {
+                    sport.append($('<option/>', {'value': key, 'text': key}));
+                }
+                sport.change(function(ev) {
+                    sport_event.empty();
+                    sport_event.append($('<option/>'));
+                    var events = sports_events[sport.val()];
+                    for (var i in events) {
+                        sport_event.append($('<option/>', {'value': events[i], 'text': events[i]}));
+                    }
+                });
+            </script>
+            <!-- I have built this from a number of different sources -->
+            <!--Source: dirn. Passing value from a drop down menu to a Flask template [Online]. [Accessed 01 May 2020]. Available at:https://stackoverflow.com/questions/23557063/passing-value-from-a-drop-down-menu-to-a-flask-template -->
+            <!--Source: Shivendra Pratap Kushwaha. Show select field based on some other select option in Flask [Online]. [Accessed 01 May 2020]. Available at:https://stackoverflow.com/questions/58841634/show-select-field-based-on-some-other-select-option-in-flask -->
+            <!--Source: MrLeeh. Flask Dynamic dependent dropdown list [Online]. [Accessed 01 May 2020]. Available at:https://stackoverflow.com/questions/44646925/flask-dynamic-dependent-dropdown-list -->
+        </div>
+          <br />
+        <div>
+          {% for fact in message %}
+          <h5> Fun Fact: {{ fact}} </h5>
+          {% endfor %}
+        </div>
+        <div class="chart" id="height_graph">
+          <script>
+            var graphs = {{height_graph | safe}};
+            Plotly.plot('height_graph',graphs,{});
+          </script>
+        </div>
+        <div class="chart" id="weight_graph">
+          <script>
+            var graphs = {{weight_graph | safe}};
+            Plotly.plot('weight_graph',graphs,{});
+          </script>
+          <!--Source: Wambui, Y. Flask + Plotly Dashboard [Online]. [Accessed 02 May 2020]. Available at:https://blog.heptanalytics.com/flask-plotly-dashboard/ -->
+        </div>
+      </div>
+      <br />
+      <!-- <div class="section" id="continent_section">
+        <h3>Becoming a Global Olympics?</h3>
+        <h5>The Unified Team of 1992 (Russia, Ukraine, Kazakhstan, Belarus, Uzbekistan and Armenia) is classed as Europe and the Individual Olympic Athletes of 2014 (India) are classed as Asia.</h5>
+        <!--Source: Wikipedia. Unified Team at the 1992 Winter Olympics [Online]. [Accessed 08 May 2020]. Available at:https://en.wikipedia.org/wiki/Unified_Team_at_the_1992_Winter_Olympics -->
+        <!--Source: Wikipedia. Independent Olympic Participants at the 2014_Winter Olympics [Online]. [Accessed 08 May 2020]. Available at:https://en.wikipedia.org/wiki/Independent_Olympic_Participants_at_the_2014_Winter_Olympics -->
+        <!--<div class="chart" id="continent_graph">
+          <script>
+              var graphs = {{continent_graph | safe}};
+              Plotly.plot('continent_graph',graphs,{});
+          </script>
+      </div>
+    </div>
+    <br /> -->
+    <div class="section" id="map_gender_distribution_section">
+    <h3>Mapping Male Dominance</h3>
+    <h5>Sit back and Play! Top tip: Zoom in on the map to view a geographic area closer if needed.</h5>
+    <div class="chart" id="map_gender_distribution">
+      <script>
+          var graphs = {{map_gender_distribution | safe}};
+          Plotly.plot('map_gender_distribution',graphs,{});
+      </script>
+    </div>
+    </div>
+    <br />
+    <div class="section" id="gender_dist_section">
+      <h3>Equality is increasing overall but...</h3>
+      <div class="chart" id="gender_distribution_graph">
+        <script>
+            var graphs = {{gender_distribution_graph | safe}};
+            Plotly.plot('gender_distribution_graph',graphs,{});
+        </script>
+    </div>
+  </div>
+<br />
+<div class="section" id="events_over_time_section">
+  <h3>It's not just Snowboarding that's new!</h3>
+  <h5>Did you think Curling was an Olympic Sport vetern? Me too.</h5>
+  <div class="chart" id="events_over_time_graph">
+    <script>
+        var graphs = {{events_over_time_graph | safe}};
+        Plotly.plot('events_over_time_graph',graphs,{});
+    </script>
+</div>
+</div>
+<br />
+<!-- <div class="section" id="new_sports_new_nations_section">
+<h3>How popular are the 'traditional' sports with new nations?</h3>
+<div class="chart" id="new_sports_new_nations_chart">
+  <script>
+      var graphs = {{new_sports_new_nations_chart | safe}};
+      Plotly.plot('new_sports_new_nations_chart',graphs,{});
+  </script>
+</div> -->
+</div>
+</div>
+<div id="curious_label">
+  <h3 >So are you curious to learn more?</h3>
+  <br />
+  <h3 >With Beijing in 2022, don't worry! There is the 2020-2021 FIS Cross-Country World Cup soon!</h3>
+  <img src="/static/olympics.png" alt="Olympics Logo">
+  <!--Source: leo_Nordman. The Olympic rings are blue, yellow, black, green, and red because every country in the world has at least one of those colors in their flag. [Online]. [Accessed 08 May 2020]. Available at:https://www.reddit.com/r/vexillology/comments/aheot6/the_olympic_rings_are_blue_yellow_black_green_and/ -->
+</div>
+<br />
+<!-- This section is for working examples that I have discussed in the report -->
+<!-- <div class="section" id="woring_eg_section_one">
+  <h3>Working Example 1 (Please see attached report)</h3>
+  <h5>Despite having mode="markers+lines" working with a smaller dataset, for this dataset it produces a rather psychedelic scatter. I have included it here though as it I do actually like the way it presents the data as an overall picture of the Olympics. </h5>
+  <h5>Please refer to the report for this one though! </h5>
+  <div class="chart" id="working_graph_example_one">
+    <script>
+        var graphs = {{working_graph_example_one | safe}};
+        Plotly.plot('working_graph_example_one',graphs,{});
+    </script>
+</div> -->
+</div>
+</body>
+</html>
