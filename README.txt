@@ -43,3 +43,5 @@ CSV FILES USED
 # File referenced as athletes_events, reffered to as athletes and cleaned in clean_athlete_events_dataset.py : https://data.world/johayes13/summer-winter-olympic-games
 # File referenced as Winter_Olympic_Medals.xlsx - Data, referred to as Olympic Medals and cleaned in clean_winter_olympic_medals_data.py : https://data.world/makeovermonday/2018w7-the-winter-olympics
 
+Images Used
+- Image used is free to download: https://www.freepngs.com/olympics-png?pgid=j10m1cfn-40f43d98-5461-11e8-a9ff-063f49e9a7e4
